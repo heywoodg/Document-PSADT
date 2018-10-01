@@ -1,6 +1,5 @@
 Function Get-PSADTCode ($sourcefile, $searchstart, $searchend) {
     $content = New-Object System.Collections.ArrayList
-
     ForEach ($line in $sourcefile) {
         If ($line -like "$searchstart") {
             $writeit = $true
@@ -16,7 +15,6 @@ Function Get-PSADTCode ($sourcefile, $searchstart, $searchend) {
     }
     Return $content
 }
- 
 Function Write-PSADTCode ($content) {
     $SectionLines = ($content.length)
     $lineNum = 0
@@ -69,7 +67,7 @@ $selection.Style = "Title"
 $selection.typeText("PSADT: $vendor $appname $version Deployment")
 $selection.TypeParagraph()
 $selection.TypeParagraph()
-$selection.font.size = 11
+$selection.font.size = 12
 $selection.typeText("Date: $date")
 $selection.TypeParagraph()
 $selection.insertnewpage()
@@ -84,18 +82,17 @@ $toc = $doc.TablesOfContents.Add($Range)
 $selection.TypeParagraph()
 $selection.insertnewpage()
 
+# Write overview information
 $text = @"
 This document provides details of the Powershell Application Deployment Toolkit (PSADT) `
 configuration used for the deployment of $vendor $appname $version. Details of the variables used `
 as well as the installation and uninstallation configuration are included.
 "@
-
 $selection.Style = "Heading 1"
 $selection.typeText("Overview")
 $selection.TypeParagraph()
 $selection.Style = "No Spacing"
 $selection.typeText($text)
-
 $selection.TypeParagraph()
 $selection.TypeParagraph()
 
@@ -104,7 +101,6 @@ $selection.Style = "Heading 1"
 $selection.typeText("Variables")
 $selection.TypeParagraph()
 $selection.Style = "Normal"
-
 $selection.typeText("Below are the variables defined in the deploy-application.ps1 file. ")
 $selection.TypeParagraph()
 Write-PSADTCode $vars
@@ -116,12 +112,10 @@ $searchstart = '*Pre-Installation*'
 $searchend = '*##*===============================================*'
 $preinst = New-Object System.Collections.ArrayList
 $preinst = get-PSADTCode $PS1file $searchstart $searchend
-$preinst
 $selection.Style = "Heading 1"
 $selection.typeText("Pre-Installation")
 $selection.TypeParagraph()
 $selection.Style = "No Spacing"
-
 $text = @"
 The Pre-Installation section of the script will store any commands that have been added, and `
 are intended to run before the main installation. Typically these commands could be required `
@@ -130,7 +124,6 @@ to set up the environment or close applications before the main installation can
 Pre-requisites (such as Abode Flash, MS Visual C++ Runtime, etc., should not be done here, but `
 should be done from within SCCM.
 "@
-
 $selection.typeText($text)
 $selection.TypeParagraph()
 $selection.TypeParagraph()
@@ -147,12 +140,10 @@ $selection.Style = "Heading 1"
 $selection.typeText("Installation")
 $selection.TypeParagraph()
 $selection.Style = "No Spacing"
-
 $text = @"
 The Installation section of the script will store any commands that have been added to `
 perform the actual installation of the software package. 
 "@
-
 $selection.typeText($text)
 $selection.TypeParagraph()
 $selection.TypeParagraph()
@@ -169,12 +160,10 @@ $selection.Style = "Heading 1"
 $selection.typeText("Post-Installation")
 $selection.TypeParagraph()
 $selection.Style = "No Spacing"
-
 $text = @"
 The Post-installation section of the script will store any commands that have been added to `
 be run after the installation of the software package. 
 "@
-
 $selection.typeText($text)
 $selection.TypeParagraph()
 $selection.TypeParagraph()
@@ -208,12 +197,10 @@ $selection.Style = "Heading 1"
 $selection.typeText("Unstallation")
 $selection.TypeParagraph()
 $selection.Style = "No Spacing"
-
 $text = @"
 The Uninstallation section of the script will store any commands that need to be rune run to do `
 the installation of the software package.
 "@
-
 $selection.typeText($text)
 $selection.TypeParagraph()
 $selection.TypeParagraph()
